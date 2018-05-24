@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>testing word width</title>
+
+    <style>
+        input, textarea {
+            font-family: 'Helvetica Neue';
+            font-weight: 300;
+            padding: 0.35em 0.5em;
+            font-size: 1.2em;
+            color: #777;
+        }
+        textarea {
+            width: 80vw;
+        }
+        body {
+            padding: 1em;
+        }
+        #test {
+            border: 1px solid gray;
+            width: 100px;
+        }
+    </style>
+<body>
+<canvas id="canvasElement" style="display: none"></canvas>
+<div>
+    <input type="number" id="availableWidth" placeholder="width here    " value="200"/>
+</div>
+<div>
+    <textarea type="text" id="textData" placeholder="data here" rows="10">
+        asdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGSasdfadsfASDGSGSFGFSGS
+    </textarea>
+</div>
+<div id="test"></div>
+<script type="text/javascript" src="index.js"></script>
+<script>
+    const div = document.getElementById('test');
+    const inputWidthElement = document.getElementById('availableWidth');
+    const textData = document.getElementById('textData')
+    textData.addEventListener('focusout', handleFocusOut);
+    inputWidthElement.addEventListener('focusout', handleFocusOut);
+    function handleFocusOut(e) {
+	    const canvasElement = document.createElement('canvas');
+	    const inputString = textData.value;
+	    const availableWidth = +inputWidthElement.value;
+	    div.style.width = `${availableWidth}px`;
+	    const breakIndices = getBreakIndices(inputString, availableWidth, canvasElement, 'Arial', 16);
+	    console.log( breakIndices);
+	    const outputStr = insertCharsIntoIndices(inputString, breakIndices, '<br/>');
+	    console.log(outputStr);
+	    div.innerHTML = outputStr;
+    }
+</script>
+</body>
+</html>
